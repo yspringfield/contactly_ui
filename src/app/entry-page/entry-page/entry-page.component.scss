@@ -1,0 +1,29 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background: unset;
+  color: unset;
+}
+
+.grid_system {
+  display: grid;
+  grid-auto-flow: row;
+  align-items: stretch;
+  align-content: flex-start;
+  justify-items: stretch;
+  justify-content: stretch;
+  grid-template-rows: min-content min-content min-content 1fr;
+}
+
+.mat-drawer {
+  background-color: unset;
+  color: unset;
+}
+
+.mat-sidenav {
+  color: unset;
+}
+
+.content_area {
+  background-image: linear-gradient(to bottom, hsl(229.1, 64.7%, 96.7%), hsl(320, 60%, 99%));
+}
