@@ -8,6 +8,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HorizontalListContactsComponent } from './horizontal-list-contacts/horizontal-list-contacts.component';
 import { CardsListContactsComponent } from './cards-list-contacts/cards-list-contacts.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NewContactFormComponent } from './forms/new-contact-form/new-contact-form.component';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     ToolbarComponent,
     HorizontalListContactsComponent,
     CardsListContactsComponent,
+    NewContactFormComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     HttpClientModule,
     RouterModule,
     NgScrollbarModule,
+    MaterialModule,
   ],
   exports: [
     SideNavComponent,
@@ -33,6 +37,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     ToolbarComponent,
     CardsListContactsComponent,
     HorizontalListContactsComponent,
+    NewContactFormComponent,
     NgScrollbarModule,
   ]
 })

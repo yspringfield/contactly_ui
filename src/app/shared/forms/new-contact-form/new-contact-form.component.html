@@ -1,0 +1,42 @@
+<form class="container">
+    <span>hello world</span>
+    <hr class="divider"/>
+    <div class="form_field drop_container">
+        <small class="title">Select Image</small>
+        <label class="image-upload-container btn btn-bwm">
+            <div [ngClass]="{one_column: selectedFile}" class="dropzone form_input">
+                <span>Drag and drop file here</span>
+                <span>or click to select file</span>
+                <input #imageInput class="full_container" type="file" accept="image/*"
+                    (change)="processFile(imageInput)">
+            </div>
+            <div *ngIf="selectedFile" class="img-preview-container">
+                <img [src]="selectedFile.file" class="img-preview" />
+            </div>
+        </label>
+    </div>
+
+    <div class="form_field">
+        <small>Name</small>
+        <input class="form_input field" type='text'>
+    </div>
+    <div class="form_field">
+        <small>phonenumber</small>
+        <input class="form_input field" type='text'>
+</div>  
+    <div class="form_field">
+        <small>email</small>
+        <input class="form_input field" type='text'>
+    </div>
+    <div class="form_field">
+        <div class="space-between">
+            <small>Anything you'll like to save with this contact?</small> <small>(0/1000)</small>
+        </div>
+        <textarea class="form_input field" rows="3" maxlength=" 1000"></textarea>
+    </div>
+    <span></span>
+    <div class="space-between">
+        <button mat-button class="btn_action">Cancel</button>
+        <button mat-raised-button class="btn_action btn_save">Save</button>
+    </div>
+</form>

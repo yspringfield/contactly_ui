@@ -10,6 +10,7 @@ export class ContactsComponent implements OnInit {
   @ViewChild('list_toggle', { static: false })
   list_toggle;
   constructor() { }
+  
 
   ngOnInit() {
   }

@@ -1,7 +1,17 @@
 <div class="container">
     <ng-scrollbar>
-        <div class="item" *ngFor="let item of [1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27]">
-            item here
+        <div class="item"
+            *ngFor="let item of [1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27]">
+            <img src="https://picsum.photos/200" class="profile_photo">
+            <span></span>
+            <!--Occupy the first two empty columns-->
+            <span></span>
+            <!--Occupy the first two empty columns-->
+            <h1 class="name mat-h2"> Peter Thiel </h1>
+            <span class="light mat-body mat-body-1"> 10:30 AM </span>
+            <span class="light mat-body mat-body-1"> Peter Thiel </span>
         </div>
+        <hr class="space_occupier" />
     </ng-scrollbar>
+    <span class="blurred"></span>
 </div>

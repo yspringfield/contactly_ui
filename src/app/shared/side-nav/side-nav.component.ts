@@ -24,8 +24,8 @@ export class SideNavComponent implements OnInit {
     },
     {
       icon: 'fas fa-calendar-times',
-      link: 'something3',
-      name: 'antoher thing2',
+      link: '/graphs',
+      name: 'Graphs',
     },
     {
       icon: 'fas fa-calendar-times',

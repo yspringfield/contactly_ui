@@ -6,11 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: EntryPageComponent,
-    children:[
+    children: [
       {
         path: 'contacts',
-        loadChildren: () => import('./../contacts/contacts.module').then(m => m.ContactsModule) ,
-      }
+        loadChildren: () => import('./../contacts/contacts.module').then(m => m.ContactsModule),
+      },
+      {
+        path: 'graphs',
+        loadChildren: () => import('./../graphs/graphs.module').then(m => m.GraphsModule),
+      },
     ]
   }
 ];
