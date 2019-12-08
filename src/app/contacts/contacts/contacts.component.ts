@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { ContactsService } from 'src/app/services/contacts/contacts.service';
 
 @Component({
   selector: 'app-contacts',
@@ -7,10 +8,13 @@ import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 })
 export class ContactsComponent implements OnInit {
   hide = true;
+
   @ViewChild('list_toggle', { static: false })
   list_toggle;
-  constructor() { }
-  
+
+  constructor() {
+  }
+
 
   ngOnInit() {
   }

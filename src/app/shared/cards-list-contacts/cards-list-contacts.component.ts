@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Contact, ContactsService } from 'src/app/services/contacts/contacts.service';
 
 @Component({
   selector: 'app-cards-list-contacts',
@@ -6,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cards-list-contacts.component.scss']
 })
 export class CardsListContactsComponent implements OnInit {
+  contacts$: Observable<Contact[]>;
 
-  constructor() { }
+  constructor(private contactsService: ContactsService) {
+    this.contacts$ = contactsService.contacts$
+  }
+
 
   ngOnInit() {
   }

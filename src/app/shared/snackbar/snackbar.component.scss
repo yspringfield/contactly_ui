@@ -1,0 +1,40 @@
+:host {
+  padding: unset;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  display: grid;
+//   grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.warn {
+  //   @include container();
+  background: rgb(182, 139, 59);
+  color: orange;
+}
+
+.default {
+  //   @include container();
+  // background: tint(orange,30%);
+  // color:orange;
+}
+
+.error {
+  //   @include container();
+  background: rgb(212, 119, 119);
+  color: red;
+}
+
+.success {
+  //   @include container();
+  background: #77b577;
+  color: green;
+}

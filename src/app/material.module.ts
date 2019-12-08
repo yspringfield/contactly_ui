@@ -40,6 +40,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     exports: [
@@ -59,6 +60,7 @@ import { MatTreeModule } from '@angular/material/tree';
         MatStepperModule,
         MatDatepickerModule,
         MatDialogModule,
+        ReactiveFormsModule,
         MatDividerModule,
         MatExpansionModule,
         MatGridListModule,

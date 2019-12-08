@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { nodesAndLinks } from './nodes'
 import * as d3 from 'd3'
 
@@ -7,25 +7,35 @@ import * as d3 from 'd3'
   templateUrl: './force-graph.component.html',
   styleUrls: ['./force-graph.component.scss']
 })
-export class ForceGraphComponent implements OnInit {
+export class ForceGraphComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('viz', { static: true })
-  viz;
+  @ViewChild('container', { static: true })
+  contanier;
   constructor() { }
 
   ngOnInit() {
-    this.render(nodesAndLinks)
+    const dimens = this.getDimens(this.contanier.nativeElement)
+    this.render(nodesAndLinks, dimens)
+    // this.render(nodesAndLinks)
   }
 
-  render = (nodesAndLinks) => {
+  //@ts-ignore
+  getDimens: (element) => number[] = (element) => ([element.getBoundingClientRect().width, element.getBoundingClientRect().height])
 
-    var width = 800;
-    var height = 600;
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
+  ngAfterViewInit() {
+    console.log({ container: this.contanier })
+  }
+
+  // render = (nodesAndLinks) => {
+    render = (nodesAndLinks, dimens: number[]) => {
+
+    let width = dimens[0]-201;
+    let height = dimens[1]-30;
+    let color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // d3.json("miserables.json").then(function (nodesAndLinks) {
 
-    var label = {
+    let label = {
       'nodes': [],
       'links': []
     };
@@ -39,11 +49,11 @@ export class ForceGraphComponent implements OnInit {
       });
     });
 
-    var labelLayout = d3.forceSimulation(label.nodes)
+    let labelLayout = d3.forceSimulation(label.nodes)
       .force("charge", d3.forceManyBody().strength(-50))
       .force("link", d3.forceLink(label.links).distance(0).strength(2));
 
-    var graphLayout = d3.forceSimulation(nodesAndLinks.nodes)
+    let graphLayout = d3.forceSimulation(nodesAndLinks.nodes)
       .force("charge", d3.forceManyBody().strength(-3000))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("x", d3.forceX(width / 2).strength(1))
@@ -51,7 +61,7 @@ export class ForceGraphComponent implements OnInit {
       .force("link", d3.forceLink(nodesAndLinks.links).id(function (d) { return d.id; }).distance(50).strength(1))
       .on("tick", ticked);
 
-    var adjlist = [];
+    let adjlist = [];
 
     nodesAndLinks.links.forEach(function (d) {
       adjlist[d.source.index + "-" + d.target.index] = true;
@@ -63,8 +73,8 @@ export class ForceGraphComponent implements OnInit {
     }
 
 
-    var svg = d3.select("#viz").attr("width", width).attr("height", height);
-    var container = svg.append("g");
+    let svg = d3.select("#viz").attr("width", width).attr("height", height);
+    let container = svg.append("g");
 
     svg.call(
       d3.zoom()
@@ -72,7 +82,7 @@ export class ForceGraphComponent implements OnInit {
         .on("zoom", function () { container.attr("transform", d3.event.transform); })
     );
 
-    var link = container.append("g").attr("class", "links")
+    let link = container.append("g").attr("class", "links")
       .selectAll("line")
       .data(nodesAndLinks.links)
       .enter()
@@ -80,7 +90,7 @@ export class ForceGraphComponent implements OnInit {
       .attr("stroke", "#aaa")
       .attr("stroke-width", "1px");
 
-    var node = container.append("g").attr("class", "nodes")
+    let node = container.append("g").attr("class", "nodes")
       .selectAll("g")
       .data(nodesAndLinks.nodes)
       .enter()

@@ -1,0 +1,14 @@
+:host {
+  flex-grow: 1;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: min-content 1fr;
+  position: absolute;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+}
+
+.container {
+}

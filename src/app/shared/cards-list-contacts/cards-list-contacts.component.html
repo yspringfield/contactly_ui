@@ -1,28 +1,31 @@
 <div class="container">
     <ng-scrollbar>
         <div class="content">
-            <div class="item"
-                *ngFor="let item of [1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27]">
-                <div class="flip-box">
-                    <div class="flip-box-inner">
-                        <div class="flip-box-front">
-                            <img src="https://picsum.photos/200" class="profile_photo">
-                        </div>
-                        <div class="flip-box-back">
-                            <h1 class="name mat-h2 full-width"> Peter Thiel </h1>
-                            <span class="full-width light mat-body mat-body-1"> Peter Thiel </span>
-                            <div class="space-evently">
-                                <span>10:30 AM </span>
-                                <i class="fas fa-edit"></i>
-                                <i class="far fa-heart"></i>
-                                <i class="far fa-thrash"></i>
+            <ng-container *ngIf="(this.contacts$ | async) as contacts">
+                <div class="item" *ngFor="let contact of contacts">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <img [src]="contact.profile_photo" class="profile_photo">
+                            </div>
+                            <div class="flip-box-back">
+                                <h1 class="name mat-h2 full-width"> {{contact.name}} </h1>
+                                <span class="full-width light mat-body mat-body-1">
+                                    {{contact.description | ellipsize: 100}}
+                                </span>
+                                <div class="space-evently">
+                                    <span>{{contact.registrationTime| date:'shortDate'}} </span>
+                                    <i class="fas fa-edit"></i>
+                                    <i class="far fa-heart"></i>
+                                    <i class="far fa-thrash"></i>
+
+                                </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </ng-scrollbar>
 

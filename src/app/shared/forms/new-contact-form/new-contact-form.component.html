@@ -1,6 +1,6 @@
-<form class="container">
+<form class="container" [formGroup]="newContactForm" (ngSubmit)="onSubmit()">
     <span>hello world</span>
-    <hr class="divider"/>
+    <hr class="divider" />
     <div class="form_field drop_container">
         <small class="title">Select Image</small>
         <label class="image-upload-container btn btn-bwm">
@@ -10,33 +10,39 @@
                 <input #imageInput class="full_container" type="file" accept="image/*"
                     (change)="processFile(imageInput)">
             </div>
-            <div *ngIf="selectedFile" class="img-preview-container">
-                <img [src]="selectedFile.file" class="img-preview" />
+            <div *ngIf="newContactForm.controls.profile_photo.value !== ''" class="img-preview-container">
+                <img [src]="newContactForm.controls.profile_photo.value" class="img-preview" />
             </div>
         </label>
     </div>
 
     <div class="form_field">
         <small>Name</small>
-        <input class="form_input field" type='text'>
+        <input formControlName="name" class="form_input field" type='text'>
     </div>
     <div class="form_field">
         <small>phonenumber</small>
-        <input class="form_input field" type='text'>
-</div>  
+        <input formControlName="phonenumber" class="form_input field" type='text'>
+    </div>
     <div class="form_field">
         <small>email</small>
-        <input class="form_input field" type='text'>
+        <input formControlName="email" class="form_input field" type='text'>
     </div>
     <div class="form_field">
         <div class="space-between">
-            <small>Anything you'll like to save with this contact?</small> <small>(0/1000)</small>
+            <small>Anything you'll like to save with this contact?</small>
+            <small>({{newContactForm.controls.description.value.length}}/1000)</small>
         </div>
-        <textarea class="form_input field" rows="3" maxlength=" 1000"></textarea>
+        <textarea formControlName="description" class="form_input field" rows="3" maxlength=" 1000"></textarea>
     </div>
     <span></span>
-    <div class="space-between">
-        <button mat-button class="btn_action">Cancel</button>
-        <button mat-raised-button class="btn_action btn_save">Save</button>
+    <div class="space-between" style="height:40px">
+        <button type='button' mat-button class="btn_action" (click)="resetForm()">Cancel</button>
+        <button [disabled]="!newContactForm.valid" mat-raised-button class="btn_action btn_save">
+            <span class="flex">
+                Save
+                <mat-spinner *ngIf="loading" mode='indeterminate' diameter='18' strokeWidth='2'></mat-spinner>
+            </span>
+        </button>
     </div>
 </form>

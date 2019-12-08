@@ -12,13 +12,13 @@
   overflow-y: auto;
   // grid-auto-rows: 50px;
   grid-template-rows: 1fr;
-  position:relative;
-  max-height: 550px;
+  position: relative;
+  max-height: 629px;
 }
 
 .item {
   border: 4px;
-//   height: 64px;
+  //   height: 64px;
   width: calc(100% - 16px);
   background-color: rgba(255, 255, 255, 0.548);
   margin: 8px auto 8px 0px;
@@ -26,22 +26,23 @@
   border-radius: 4px;
   box-sizing: border-box;
   display: grid;
+  position: relative;
   grid-template-columns: min-content 1fr auto;
   grid-template-rows: 10px min-content min-content min-content;
   grid-column-gap: 12px;
   cursor: pointer;
   align-items: flex-start;
   justify-items: flex-start;
-  transition:all 400ms cubic-bezier(0.39, 0.575, 0.565, 1);
-  &:hover{
-      background-color: white;
-      box-shadow: 0 3px 5px -1px rgba(55, 137, 225, 0.2), 0 6px 10px 0 rgba(55, 137, 225, 0.14),
+  transition: all 400ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  &:hover {
+    background-color: white;
+    box-shadow: 0 3px 5px -1px rgba(55, 137, 225, 0.2), 0 6px 10px 0 rgba(55, 137, 225, 0.14),
       0 1px 18px 0 rgba(55, 137, 225, 0.12);
-        height:105%;
-        width:98%;
-        position:relative;
-        top:-2.5%;
-        right: -1%;
+    height: 105%;
+    width: 98%;
+    position: relative;
+    top: -2.5%;
+    right: -1%;
   }
   &:first-child {
     // margin-top: unset;
@@ -61,7 +62,7 @@
 }
 
 .name {
-//   font-size: 18px;
+  //   font-size: 18px;
   color: rgba(0, 0, 0, 0.8);
   margin: unset;
 }
@@ -70,22 +71,42 @@
   font-size: 15px;
 }
 
-.light{
-    color: rgba(0, 0, 0, 0.5);
+.light {
+  color: rgba(0, 0, 0, 0.5);
 }
 
-.blurred{
+.blurred {
   position: absolute;
-  bottom:0px;
-  width:100%;
-  left:0px;
+  bottom: 0px;
+  width: 100%;
+  left: 0px;
   height: 70px;
   z-index: 2;
   background-image: linear-gradient(to top, #fff, rgba(255, 255, 255, 0.219));
 }
 
-.space_occupier{
+.space_occupier {
   height: 70px;
   background-color: transparent;
-  border:unset;
+  border: unset;
+}
+
+.actions {
+  display: grid;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+  grid-column-gap: 8px;
+}
+
+.loader {
+  display: flex;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  // grid-auto-flow: column;
+  // grid-auto-columns: min-content;
+  // grid-column-gap: 8px;
 }

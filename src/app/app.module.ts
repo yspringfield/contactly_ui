@@ -9,6 +9,8 @@ import {
   SideNavServiceService,
 } from './shared'
 import { MaterialModule } from './material.module';
+import { ContactsService } from './services/contacts/contacts.service';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +24,8 @@ import { MaterialModule } from './material.module';
   ],
   providers: [
     SideNavServiceService,
+    ContactsService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500, panelClass: 'snackbar'}}
   ],
   bootstrap: [AppComponent]
 })

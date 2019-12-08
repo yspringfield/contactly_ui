@@ -10,6 +10,8 @@ import { CardsListContactsComponent } from './cards-list-contacts/cards-list-con
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NewContactFormComponent } from './forms/new-contact-form/new-contact-form.component';
 import { MaterialModule } from '../material.module';
+import { EllipsizePipe } from './pipes/ellipsize.pipe';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { MaterialModule } from '../material.module';
     HorizontalListContactsComponent,
     CardsListContactsComponent,
     NewContactFormComponent,
+    EllipsizePipe,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
@@ -34,11 +38,15 @@ import { MaterialModule } from '../material.module';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    SnackbarComponent,
     ToolbarComponent,
     CardsListContactsComponent,
     HorizontalListContactsComponent,
     NewContactFormComponent,
     NgScrollbarModule,
+  ],
+  entryComponents: [
+    SnackbarComponent,
   ]
 })
 export class SharedModule { }

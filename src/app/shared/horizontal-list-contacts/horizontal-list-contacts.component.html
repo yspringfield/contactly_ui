@@ -1,17 +1,47 @@
 <div class="container">
     <ng-scrollbar>
-        <div class="item"
-            *ngFor="let item of [1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27,1,2,3,4,5,6,7,8,9,0,11,12,13,14,15,27]">
-            <img src="https://picsum.photos/200" class="profile_photo">
-            <span></span>
-            <!--Occupy the first two empty columns-->
-            <span></span>
-            <!--Occupy the first two empty columns-->
-            <h1 class="name mat-h2"> Peter Thiel </h1>
-            <span class="light mat-body mat-body-1"> 10:30 AM </span>
-            <span class="light mat-body mat-body-1"> Peter Thiel </span>
-        </div>
-        <hr class="space_occupier" />
+        <ng-container *ngIf="contacts$ | async as contacts">
+            <div class="item" *ngFor="let contact of contacts">
+                <img [src]="contact.profile_photo" class="profile_photo">
+                <span></span>
+                <!--Occupy the first two empty columns-->
+                <span></span>
+                <!--Occupy the first two empty columns-->
+                <h1 class="name mat-h2"> {{contact.name}} </h1>
+                <span class="light mat-body mat-body-1"> {{contact.registrationTime | date:"shortDate"}} </span>
+                <span class="light mat-body mat-body-1"> {{contact.description| ellipsize: 100}} </span>
+                <div class="actions" *ngIf="!contact.loading; else loading">
+                    <div (click)="markForEdit(contact)">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <ng-container *ngIf="contact.is_favorite;then favorite else not_favorite">
+                    </ng-container>
+                    <ng-template #favorite>
+                        <div (click)="toggleFavorite(contact.id)">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </ng-template>
+                    <ng-template #not_favorite>
+                        <div (click)="toggleFavorite(contact.id)">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </ng-template>
+                    <div (click)="deleteContact(contact.id)">
+                        <i class="far fa-thrash"></i>
+                    </div>
+
+                </div>
+
+                <ng-template #loading>
+                    <div class="loader">
+                        <mat-spinner mode='indeterminate' diameter='24' strokeWidth='2'></mat-spinner>
+                    </div>
+                </ng-template>
+
+
+            </div>
+            <hr class="space_occupier" />
+        </ng-container>
     </ng-scrollbar>
     <span class="blurred"></span>
 </div>
