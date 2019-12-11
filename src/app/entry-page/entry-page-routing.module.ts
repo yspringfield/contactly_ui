@@ -12,8 +12,8 @@ const routes: Routes = [
         loadChildren: () => import('./../contacts/contacts.module').then(m => m.ContactsModule),
       },
       {
-        path: 'graphs',
-        loadChildren: () => import('./../graphs/graphs.module').then(m => m.GraphsModule),
+        path: 'dashboard',
+        loadChildren: () => import('./../dashboard/dashboard.module').then(m => m.DashboardModule),
       },
     ]
   }

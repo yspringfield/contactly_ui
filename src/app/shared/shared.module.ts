@@ -12,6 +12,9 @@ import { NewContactFormComponent } from './forms/new-contact-form/new-contact-fo
 import { MaterialModule } from '../material.module';
 import { EllipsizePipe } from './pipes/ellipsize.pipe';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { PiechartComponent } from './piechart/piechart.component';
+import { DimensPipe } from './pipes/dimens.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     NewContactFormComponent,
     EllipsizePipe,
     SnackbarComponent,
+    DonutChartComponent,
+    PiechartComponent,
+    DimensPipe,
   ],
   imports: [
     CommonModule,
@@ -32,6 +38,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     NgScrollbarModule,
     MaterialModule,
   ],
+  providers: [
+    DimensPipe,
+  ],
   exports: [
     SideNavComponent,
     FormsModule,
@@ -39,6 +48,8 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     HttpClientModule,
     RouterModule,
     SnackbarComponent,
+    DonutChartComponent,
+    PiechartComponent,
     ToolbarComponent,
     CardsListContactsComponent,
     HorizontalListContactsComponent,

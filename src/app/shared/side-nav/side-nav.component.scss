@@ -10,7 +10,7 @@
   overflow-x: hidden;
   justify-content: stretch;
   color: unset;
-  background-image: linear-gradient(to right, #dfdffa, #d9d9f4);
+  background-image: linear-gradient(to right, #dfdffa, #e3ecf5);
   grid-auto-rows: min-content min-content 1fr;
   padding-top: 46px;
   grid-row-gap: 16px;
@@ -49,12 +49,13 @@
   }
 
   &:hover {
-    background-image: linear-gradient(to left, #dfdffa, #d9d9f4);
+    background-image: linear-gradient(to left, #dfdffa, #e3ecf5);
   }
 }
 
 .active {
   & > .menu_item {
+    background-image: linear-gradient(to left, #dfdffa, #e3ecf5);
     & > * {
       color: #3788e1;
     }

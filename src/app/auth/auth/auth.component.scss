@@ -1,0 +1,73 @@
+:host {
+  margin: unset;
+  padding: unset;
+  //   position: relative;
+  //   background-image: url({"./../../../assets/auth_background.jpg");
+}
+.img {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  //   opacity: 0.5;
+  object-fit: cover;
+  width: 100%;
+}
+
+.container {
+  height: 100vh;
+  background-image: linear-gradient(to right, #00000059, #00000079),
+    url("https://firebasestorage.googleapis.com/v0/b/ace-memory.appspot.com/o/kate-trysh-WX5jK0BT5JQ-unsplash.jpg?alt=media&token=b3c1d735-9197-4c6d-b422-ce4e697b331b");
+  position: relative;
+  background-size: cover;
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+}
+
+.section {
+  flex-basis: 0px;
+  height: 100%;
+  flex-grow: 4;
+  flex-shrink: 4;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: white;
+  justify-content: center;
+  // padding-top: 40px;
+}
+
+.content {
+  flex-basis: 200px;
+  flex-grow: 1;
+  flex-shrink: 0.5;
+  height: 100%;
+  background-color: #e3ecf5;
+}
+
+.main_content {
+  display: grid;
+  grid-auto-flow: rows;
+  grid-auto-rows: min-content;
+  grid-row-gap: 8px;
+  align-content: center;
+  justify-items: flex-start;
+  justify-content: center;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  padding: 8px;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.title{
+  margin:unset;
+}

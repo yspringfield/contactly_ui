@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
-import { ContactsService } from 'src/app/services/contacts/contacts.service';
+import { StoreService } from 'src/app/services/store/store.service';
 
 @Component({
   selector: 'app-contacts',

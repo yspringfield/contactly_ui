@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { ContactsService } from 'src/app/services/contacts/contacts.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../snackbar/snackbar.component';
 
@@ -31,7 +31,7 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
     is_favorite: false,
   }
 
-  constructor(private _contactsService: ContactsService, private _snackBarService: MatSnackBar, _formBuilder: FormBuilder) {
+  constructor(private _contactsService: StoreService, private _snackBarService: MatSnackBar, _formBuilder: FormBuilder) {
     this.newContactForm = _formBuilder.group(this.defaultFormValue)
     this.sink.push(this._contactsService.contacts_to_edit$.subscribe(
       contact => {

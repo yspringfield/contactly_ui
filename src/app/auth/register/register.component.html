@@ -1,0 +1,28 @@
+<form class="container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="title">Together, we can become globally connected</div>
+    <small class="subtitle">Please enter your parameters below to register
+        <a class="link" routerLink="/auth/login">or login</a>
+    </small>
+    <div class="form_field">
+        <small>Username/Email*</small>
+        <input formControlName="name" class="form_input field" type='text'>
+    </div>
+    <div class="form_field">
+        <small>Password*</small>
+        <input formControlName="name" class="form_input field" type='password'>
+    </div>
+
+    <div class="form_field">
+        <small>Image*</small>
+        <input formControlName="profile_photo" class="form_input field" type='file'>
+    </div>
+    <button [disabled]="!loginForm.valid" type="submit" mat-raised-button class="button">
+        <span style="display: flex; align-items: center; justify-content: space-evenly;">
+            <span>Register</span>
+            <mat-spinner *ngIf="loading" class="white-spinner" color='primary' mode='indeterminate' diameter='18'
+                strokeWidth='2'>
+            </mat-spinner>
+        </span>
+    </button>
+
+</form>

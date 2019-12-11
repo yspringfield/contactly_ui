@@ -12,10 +12,16 @@ export interface Contact {
   description: string;
 }
 
+export interface LoginData {
+  username: string;
+  password: string;
+
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class ContactsService {
+export class StoreService {
   _contacts: Contact[] = new Array(5).fill(
     {
       name: "Peter Thiel",
@@ -26,6 +32,8 @@ export class ContactsService {
       description: 'In this post, we will learn how the default Angular styling mechanism (Emulated Encapsulation) works under the hood, and we will also cover the Sass support of the Angular CLI, and some best practices for how to leverage the many Sass features available.',
     }
   ).map((i, idx) => ({ ...i, id: idx + 1 }))
+
+  login_data: LoginData;
 
   private _contacts$ = new BehaviorSubject<Contact[]>(this._contacts)
   //@ts-ignore
@@ -97,6 +105,12 @@ export class ContactsService {
     this._contacts_to_edit$.next(contact)
   }
 
+  login = (login_data: LoginData) => timer(2000).pipe(
+    tap({
+      complete: () => this.login_data = login_data
+    })
+  )
+  
   constructor() { }
 
   get contacts$() { return this._contacts$.asObservable() }

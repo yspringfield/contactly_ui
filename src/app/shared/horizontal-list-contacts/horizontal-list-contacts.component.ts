@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService, Contact } from 'src/app/services/contacts/contacts.service';
+import { StoreService, Contact } from 'src/app/services/store/store.service';
 import { Observable, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
@@ -13,7 +13,7 @@ export class HorizontalListContactsComponent implements OnInit {
   contacts$: Observable<Contact[]>;
 
   constructor(
-    private contactsService: ContactsService,
+    private contactsService: StoreService,
     private _snackBar: MatSnackBar,
   ) {
     this.contacts$ = contactsService.contacts$

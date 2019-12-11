@@ -2,7 +2,8 @@
     <img [src]='profile_url' class="profile_image" />
     <h3 class=".mat-h3, .mat-subheading-2 profile_name">Jimmy Hendrix</h3>
     <ul class="menu_items">
-        <a *ngFor="let menu of menus" [routerLink]="menu.link" routerLinkActive="active" class="link">
+        <a *ngFor="let menu of menus" [routerLink]="menu.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" class="link">
             <li class="menu_item ">
                 <span class="active_indicator"></span>
                 <i [class]="menu.icon"></i>

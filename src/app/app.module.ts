@@ -9,8 +9,9 @@ import {
   SideNavServiceService,
 } from './shared'
 import { MaterialModule } from './material.module';
-import { ContactsService } from './services/contacts/contacts.service';
+import { StoreService } from './services/store/store.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { AuthModule } from './auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,13 +20,14 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AuthModule,// important this be imported before the entrypagemodule due to the way routing is configured.
     EntryPageModule,
     MaterialModule,
   ],
   providers: [
     SideNavServiceService,
-    ContactsService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500, panelClass: 'snackbar'}}
+    StoreService,
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500, panelClass: 'snackbar' } }
   ],
   bootstrap: [AppComponent]
 })
