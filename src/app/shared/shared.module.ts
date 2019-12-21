@@ -15,6 +15,10 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { DonutChartComponent } from './donut-chart/donut-chart.component';
 import { PiechartComponent } from './piechart/piechart.component';
 import { DimensPipe } from './pipes/dimens.pipe';
+import { MapComponent } from './map/map.component';
+import { LineGraphComponent } from './line-graph/line-graph.component';
+import { SunburstComponent } from './sunburst/sunburst.component';
+import { ForceGraphComponent } from './force-graph/force-graph.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,10 @@ import { DimensPipe } from './pipes/dimens.pipe';
     DonutChartComponent,
     PiechartComponent,
     DimensPipe,
+    MapComponent,
+    LineGraphComponent,
+    SunburstComponent,
+    ForceGraphComponent,
   ],
   imports: [
     CommonModule,
@@ -42,12 +50,16 @@ import { DimensPipe } from './pipes/dimens.pipe';
     DimensPipe,
   ],
   exports: [
+    ForceGraphComponent,
     SideNavComponent,
+    SunburstComponent,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MapComponent,
     RouterModule,
     SnackbarComponent,
+    LineGraphComponent,
     DonutChartComponent,
     PiechartComponent,
     ToolbarComponent,

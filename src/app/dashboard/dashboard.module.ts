@@ -3,19 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ForceGraphComponent } from './force-graph/force-graph.component';
 import { SharedModule } from '../shared/shared.module';
+import { StoreService } from '../services/store/store.service';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ForceGraphComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
+  ],
+  providers: [
+    StoreService,
   ]
 })
 export class DashboardModule { }

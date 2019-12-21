@@ -1,6 +1,31 @@
 <div class="container">
     <app-toolbar title="Dashboard"></app-toolbar>
     <div class="content">
-        <app-piechart id='some_id' [data]='this.pieData'></app-piechart>
+        <div class="elements">
+            <div class="section border" *ngIf="sunburst_data$ | async as sunburstData">
+                <h1 class="section_title mat-headline">Country/Cities/Ip addresses</h1>
+                <app-sunburst id='jdkdsk' [data]='sunburstData'></app-sunburst>
+            </div>
+            <div class="section border">
+                <h1 class="section_title mat-headline">Visualizatio requests over time</h1>
+                <app-line-graph id='youo' color="teal" [data]='this.line_graph_data'></app-line-graph>
+            </div>
+            <div class="section border">
+                <h1 class="section_title mat-headline">Most used browser categories</h1>
+                <app-piechart id='some_id3' [data]='this.pieData'></app-piechart>
+            </div>
+            <div class="section border">
+                <h1 class="section_title mat-headline">Platform/Os/Browser</h1>
+                <app-piechart id='some_id5' [data]='this.pieData'></app-piechart>
+            </div>
+        </div>
+        <div class="force-chart section border" *ngIf="force_graph$ | async as force_graph_data">
+            <h1 class="section_title mat-headline">IP addresses per location</h1>
+            <app-force-graph [data]='force_graph_data'></app-force-graph>
+        </div>
+        <div class="force-chart section border">
+            <h1 class="section_title mat-headline">IP addresses per location</h1>
+            <app-map id='soei'></app-map>
+        </div>
     </div>
 </div>

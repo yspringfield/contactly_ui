@@ -1580,5 +1580,5 @@ export const nodesAndLinks = {
             "target": "Enjolras",
             "value": 1
         }
-    ]
+    ].map(i => ({ source: i.source, target: i.target }))
 }

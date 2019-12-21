@@ -1,39 +1,54 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { nodesAndLinks } from './nodes'
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { DimensPipe } from '../pipes/dimens.pipe';
 import * as d3 from 'd3'
+import { nodesAndLinks } from './../../../app/services/store/nodes'
+import { StoreService } from 'src/app/services/store/store.service';
+
 
 @Component({
   selector: 'app-force-graph',
   templateUrl: './force-graph.component.html',
-  styleUrls: ['./force-graph.component.scss']
+  styleUrls: ['./force-graph.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ForceGraphComponent implements OnInit, AfterViewInit {
+export class ForceGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('container', { static: true })
-  contanier;
-  constructor() { }
+  // @Input('id')
+  id: string = 'ioiowe';
+
+  @Input('data')
+  data: any[]
+
+  @ViewChild('container', { static: false })
+  container: any;
+
+  stopSimulation = false;
+
+  constructor(private readonly dimens_pipe: DimensPipe, private readonly _store_service: StoreService) { }
 
   ngOnInit() {
-    const dimens = this.getDimens(this.contanier.nativeElement)
-    this.render(nodesAndLinks, dimens)
-    // this.render(nodesAndLinks)
   }
-
-  //@ts-ignore
-  getDimens: (element) => number[] = (element) => ([element.getBoundingClientRect().width, element.getBoundingClientRect().height])
 
   ngAfterViewInit() {
-    console.log({ container: this.contanier })
+    let dimens = this._store_service.dimens
+    if (dimens[0] === 0) {
+      dimens = this.dimens_pipe.transform(this.container.nativeElement)
+      this._store_service.dimens = dimens
+    }
+    console.log(dimens)
+    this.renderGraph(nodesAndLinks, dimens, `#${this.id}`)
   }
 
-  // render = (nodesAndLinks) => {
-    render = (nodesAndLinks, dimens: number[]) => {
+  ngOnDestroy() {
+    // this.stopSimulation = true
+  }
 
-    let width = dimens[0]-201;
-    let height = dimens[1]-30;
+  renderGraph(nodesAndLinks, dimens: number[], ref) {
+    console.log({ dimens })
+
+    let width = dimens[0] - 201;
+    let height = dimens[1];
     let color = d3.scaleOrdinal(d3.schemeCategory10);
-
-    // d3.json("miserables.json").then(function (nodesAndLinks) {
 
     let label = {
       'nodes': [],
@@ -61,6 +76,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
       .force("link", d3.forceLink(nodesAndLinks.links).id(function (d) { return d.id; }).distance(50).strength(1))
       .on("tick", ticked);
 
+
     let adjlist = [];
 
     nodesAndLinks.links.forEach(function (d) {
@@ -73,7 +89,11 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
     }
 
 
-    let svg = d3.select("#viz").attr("width", width).attr("height", height);
+    let svg = d3.select(ref)
+      .append('svg')
+      .attr("width", width)
+      .attr("height", height)
+
     let container = svg.append("g");
 
     svg.call(
@@ -87,6 +107,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
       .data(nodesAndLinks.links)
       .enter()
       .append("line")
+
       .attr("stroke", "#aaa")
       .attr("stroke-width", "1px");
 
@@ -121,11 +142,18 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
     node.on("mouseover", focus).on("mouseout", unfocus);
 
     function ticked() {
+      console.log('ticking')
+      if (this.stopSimulation) {
+        console.log('stopping')
+        graphLayout.stop()
+        labelLayout.stop()
+        return
+      }
 
       node.call(updateNode);
       link.call(updateLink);
 
-      labelLayout.alphaTarget(0.3).restart();
+      labelLayout = labelLayout.alphaTarget(0.3).restart() || labelLayout;
       labelNode.each(function (d, i) {
         if (i % 2 == 0) {
           d.x = d.node.x;
@@ -147,7 +175,6 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
       labelNode.call(updateNode);
 
     }
-
     function fixna(x) {
       if (isFinite(x)) return x;
       return 0;
@@ -187,7 +214,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
 
     function dragstarted(d) {
       d3.event.sourceEvent.stopPropagation();
-      if (!d3.event.active) graphLayout.alphaTarget(0.3).restart();
+      if (!d3.event.active) graphLayout = graphLayout.alphaTarget(0.3).restart() || graphLayout;
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -202,9 +229,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit {
       d.fx = null;
       d.fy = null;
     }
-
-    // }); // d3.json
-
   }
+
 
 }

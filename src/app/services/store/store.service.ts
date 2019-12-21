@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, timer, } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { nodesAndLinks } from './nodes'
 
 export interface Contact {
   name: string;
@@ -22,6 +24,7 @@ export interface LoginData {
   providedIn: 'root'
 })
 export class StoreService {
+  _dimens = [0, 0]
   _contacts: Contact[] = new Array(5).fill(
     {
       name: "Peter Thiel",
@@ -38,6 +41,9 @@ export class StoreService {
   private _contacts$ = new BehaviorSubject<Contact[]>(this._contacts)
   //@ts-ignore
   private _contacts_to_edit$ = new BehaviorSubject<Contact>({})
+
+  private _sunburst_data$ = new BehaviorSubject<any>({ name: 'nothing', children: [] })
+  private _force_graph$ = new BehaviorSubject<any>(nodesAndLinks)
 
   setLoading$ = (id: string) => {
     const oldContacts = this._contacts$.value
@@ -110,10 +116,27 @@ export class StoreService {
       complete: () => this.login_data = login_data
     })
   )
-  
-  constructor() { }
+
+  constructor(private readonly _http_client: HttpClient) {
+    _http_client.get("https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json")
+      .pipe(take(1))
+      .subscribe(data => {
+        this._sunburst_data$.next(data)
+      })
+    // .then(res => res.json())
+    // .then(data => {
+    //   this._sunburst_data$.next(data)
+    // })
+
+  }
 
   get contacts$() { return this._contacts$.asObservable() }
   get contacts_to_edit$() { return this._contacts_to_edit$.asObservable() }
+  get sunbust_data$() { return this._sunburst_data$.asObservable() }
+  get force_graph$() { return this._force_graph$.asObservable() }
+
+  set dimens(data){this._dimens=data}
+  get dimens(){return this._dimens}
+
 
 }

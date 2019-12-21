@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core'
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core'
 import * as d3 from 'd3'
 import { DimensPipe } from '../pipes/dimens.pipe';
 
@@ -7,7 +7,7 @@ import { DimensPipe } from '../pipes/dimens.pipe';
   templateUrl: './piechart.component.html',
   styleUrls: ['./piechart.component.scss']
 })
-export class PiechartComponent implements OnInit {
+export class PiechartComponent implements OnInit, AfterViewInit {
   @Input('id')
   id: string;
 
@@ -20,7 +20,9 @@ export class PiechartComponent implements OnInit {
   constructor(private _dimens: DimensPipe) {
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     const selector = `#${this.id}`
     const dimens = this._dimens.transform(this.container.nativeElement)
     const colors = ['#7986cb', '#64b5f6', '#4dd0e1', '#4db6ac', '#81c784', '#e0e0e0', '#dce775', '#aed581',]
@@ -63,11 +65,11 @@ export class PiechartComponent implements OnInit {
     }
 
     // set the dimensions and margins of the graph
-    var width = containerWidth >= 400 ? containerWidth : 400
-    var height = containerHeight >= 400 ? containerHeight : 400
+    var width = containerWidth
+    var height = containerHeight
     var margin = 40
 
-    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract 2/3 of margin.
     var radius = Math.min(width, height) / 3
 
     // append the svg object to the div called 'my_dataviz'
@@ -75,8 +77,9 @@ export class PiechartComponent implements OnInit {
       .append("svg")
       .attr("width", width)
       .attr("height", height)
+      .style('justify-self', 'center')
       .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+      .attr("transform", "translate(" + width / 2.5 + "," + height / 2 + ")")
 
     // create 2 data_set
     var data1 = { a: 9, b: 20, c: 30, d: 8, e: 12 }
@@ -89,7 +92,6 @@ export class PiechartComponent implements OnInit {
       const pie = d3.pie()
         .value(function (d) { return d.value; })
         .sort(null)
-      // .sort(function (a, b) { console.log(a); return d3.ascending(a.value, b.value); }) // This make sure that group order remains the same in the pie chart
 
       const data_ready = pie(data)
 
@@ -105,7 +107,7 @@ export class PiechartComponent implements OnInit {
           .innerRadius(0)
           .outerRadius(radius)
         )
-        .attr('fill', function (d) { console.log({ data: d }); return d.data.color })
+        .attr('fill', function (d) { return d.data.color })
         .attr('stroke-width', 1)
         .attr('stroke', 'white')
         .attr('class', 'arc')
