@@ -49,6 +49,11 @@ export class HorizontalListContactsComponent implements OnInit {
     this.contactsService.markForEdit(contact)
   }
 
+
+  // viewDetails = (contact: Contact) => {
+  //   this.contactsService.viewDetails(contact)
+  // }
+
   ngOnInit() {
   }
 

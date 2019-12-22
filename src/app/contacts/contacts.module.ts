@@ -7,6 +7,7 @@ import { FormNewContactComponent } from './form-new-contact/form-new-contact.com
 import { ContactsRoutingModule } from './contacts-routing.module'
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material.module';
+import { ContactDetailsComponent } from './contact-details/contact-details.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { MaterialModule } from '../material.module';
     ContactsComponent,
     ContactsListingComponent,
     ItemContactComponent,
-    FormNewContactComponent
+    FormNewContactComponent,
+    ContactDetailsComponent
   ],
   imports: [
     ContactsRoutingModule,

@@ -1,0 +1,22 @@
+<div *ngIf="this.contact$ | async as contact" class="container">
+    <img class="img" clas [src]="contact.profile_photo" alt="image of {{contact.name}}">
+    <h2 class="title" mat-h2>{{contact.name}}</h2>
+    <span class="description">{{contact.description}}</span>
+    <small class="date">Last update: {{contact.time}}</small>
+    <div class="is_favorite">
+        <span>
+            is favorite:
+        </span>
+        <ng-container *ngIf="contact.is_favorite;then favorite else not_favorite">
+        </ng-container>
+        <ng-template #favorite>
+            <mat-icon class="icon">favorite</mat-icon>
+        </ng-template>
+        <ng-template #not_favorite>
+            <mat-icon class="icon">favorite_outline</mat-icon>
+        </ng-template>
+    </div>
+    <span></span>
+    <button (click)="this.sidenav.close()">Close</button>
+
+</div>

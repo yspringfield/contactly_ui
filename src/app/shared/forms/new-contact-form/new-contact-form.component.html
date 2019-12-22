@@ -1,6 +1,4 @@
 <form class="container" [formGroup]="newContactForm" (ngSubmit)="onSubmit()">
-    <span>hello world</span>
-    <hr class="divider" />
     <div class="form_field drop_container">
         <small class="title">Select Image</small>
         <label class="image-upload-container btn btn-bwm">
@@ -35,7 +33,7 @@
         </div>
         <textarea formControlName="description" class="form_input field" rows="3" maxlength=" 1000"></textarea>
     </div>
-    <span></span>
+    <!-- <span></span> -->
     <div class="space-between" style="height:40px">
         <button type='button' mat-button class="btn_action" (click)="resetForm()">Cancel</button>
         <button [disabled]="!newContactForm.valid" mat-raised-button class="btn_action btn_save">

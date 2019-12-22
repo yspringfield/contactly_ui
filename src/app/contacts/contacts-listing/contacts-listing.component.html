@@ -1,1 +1,30 @@
-<p>contacts-listing works!</p>
+<mat-sidenav-container class="sidenav_container" hasBackdrop='false'>
+    <mat-sidenav position='end' mode='over' (closed)="this.onClose()" class="sidenav_sidenav">
+        <router-outlet></router-outlet>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav_content">
+        <div class="container">
+            <app-toolbar title="Contacts listing"></app-toolbar>
+            <div class="two_row">
+                <div class="space_between">
+                    <div class="form_wrapper">
+                        <button class="iconmat-subheading-" mat-icon-button (click)="hide = !hide">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                        <input class="input" placeholder="Looking for someone..." type='search'>
+                    </div>
+                    <mat-button-toggle-group appearance="legacy" value='list' name="fontStyle" aria-label="Font Style"
+                        #list_toggle="matButtonToggleGroup">
+                        <mat-button-toggle value="list">List</mat-button-toggle>
+                        <mat-button-toggle value="cards">Cards</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                <div class="search_controls">
+                    <mat-checkbox>Favorite</mat-checkbox>
+                </div>
+            </div>
+            <app-horizontal-list-contacts *ngIf="list_toggle.value !== 'cards'"></app-horizontal-list-contacts>
+            <app-cards-list-contacts *ngIf="list_toggle.value === 'cards'"></app-cards-list-contacts>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

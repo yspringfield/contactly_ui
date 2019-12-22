@@ -13,27 +13,21 @@ export class SideNavComponent implements OnInit {
 
   menus = [
     {
-      icon: 'fas fa-chart-line',
+      icon: 'graphic_eq',
       link: '/dashboard',
       name: 'Dashboard',
       pathMatch: 'exact',
     },
     {
-      icon: 'fas fa-calendar-times',
-      link: 'something2',
-      name: 'antoher thing1',
+      icon: 'add',
+      link: '/contacts/new',
+      name: 'New Contact',
       pathMatch: 'exact',
     },
     {
-      icon: 'fas fa-link',
-      link: '/dashboard/force_layout',
-      name: 'Graphs',
-      pathMatch: 'exact',
-    },
-    {
-      icon: 'fas fa-calendar-times',
-      link: '/contacts',
-      name: 'Contacts',
+      icon: 'list',
+      link: '/contacts/list',
+      name: 'List contacts',
       pathMatch: 'exact',
     },
   ]

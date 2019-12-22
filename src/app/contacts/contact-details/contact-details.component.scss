@@ -1,0 +1,45 @@
+:host{
+    display:contents;
+}
+
+
+.container{
+    padding:16px;
+    display:grid;
+    overflow-y: auto;
+    grid-auto-flow: row;
+    grid-template-rows:auto auto min-content  min-content min-content 1fr min-content;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.img{
+    width:100%;
+    border-radius: 4px;
+    object-fit:cover;
+}
+
+.title{
+    text-align: left;
+}
+
+.date{
+    margin:8px 0px;
+}
+
+.description{
+    text-align: left;
+
+}
+
+.is_favorite{
+display:grid;
+grid-template-columns: auto 1fr;
+justify-items: flex-start;
+align-items:center;
+grid-gap: 8px;
+}
+
+.icon{
+
+}

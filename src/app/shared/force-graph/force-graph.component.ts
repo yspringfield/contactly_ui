@@ -35,7 +35,6 @@ export class ForceGraphComponent implements OnInit, AfterViewInit, OnDestroy {
       dimens = this.dimens_pipe.transform(this.container.nativeElement)
       this._store_service.dimens = dimens
     }
-    console.log(dimens)
     this.renderGraph(nodesAndLinks, dimens, `#${this.id}`)
   }
 
@@ -44,7 +43,6 @@ export class ForceGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   renderGraph(nodesAndLinks, dimens: number[], ref) {
-    console.log({ dimens })
 
     let width = dimens[0] - 201;
     let height = dimens[1];
@@ -142,9 +140,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     node.on("mouseover", focus).on("mouseout", unfocus);
 
     function ticked() {
-      console.log('ticking')
       if (this.stopSimulation) {
-        console.log('stopping')
         graphLayout.stop()
         labelLayout.stop()
         return

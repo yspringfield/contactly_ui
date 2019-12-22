@@ -1,47 +1,46 @@
 <div class="container">
     <ng-scrollbar>
-        <ng-container *ngIf="contacts$ | async as contacts">
-            <div class="item" *ngFor="let contact of contacts">
-                <img [src]="contact.profile_photo" class="profile_photo">
-                <span></span>
-                <!--Occupy the first two empty columns-->
-                <span></span>
-                <!--Occupy the first two empty columns-->
-                <h1 class="name mat-h2"> {{contact.name}} </h1>
-                <span class="light mat-body mat-body-1"> {{contact.registrationTime | date:"shortDate"}} </span>
-                <span class="light mat-body mat-body-1"> {{contact.description| ellipsize: 100}} </span>
-                <div class="actions" *ngIf="!contact.loading; else loading">
-                    <div (click)="markForEdit(contact)">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <ng-container *ngIf="contact.is_favorite;then favorite else not_favorite">
-                    </ng-container>
-                    <ng-template #favorite>
-                        <div (click)="toggleFavorite(contact.id)">
-                            <i class="fas fa-heart"></i>
+        <div class="content">
+            <ng-container *ngIf="contacts$ | async as contacts">
+                <ng-container *ngFor="let contact of contacts">
+                    <button class="item" routerLink="./{{contact.id}}">
+                        <img [src]="contact.profile_photo" class="profile_photo">
+                        <span></span>
+                        <span></span>
+                        <h1 class="name mat-h2"> {{contact.name}} </h1>
+                        <span class="light mat-body mat-body-1"> {{contact.registrationTime | date:"shortDate"}} </span>
+                        <span class="light mat-body mat-body-1"> {{contact.description| ellipsize: 100}} </span>
+                        <div class="actions" *ngIf="!contact.loading; else loading">
+                            <div routerLink="/contacts/update/{{contact.id}}" (click)="markForEdit(contact)">
+                                <mat-icon class="icon">edit</mat-icon>
+                            </div>
+                            <ng-container *ngIf="contact.is_favorite;then favorite else not_favorite">
+                            </ng-container>
+                            <ng-template #favorite>
+                                <div (click)="toggleFavorite(contact.id)">
+                                    <mat-icon class="icon">favorite</mat-icon>
+                                </div>
+                            </ng-template>
+                            <ng-template #not_favorite>
+                                <div (click)="toggleFavorite(contact.id)">
+                                    <mat-icon class="icon">favorite_outline</mat-icon>
+                                </div>
+                            </ng-template>
+                            <div (click)="deleteContact(contact.id)">
+                                <mat-icon class="icon">delete_outline</mat-icon>
+                            </div>
+
                         </div>
-                    </ng-template>
-                    <ng-template #not_favorite>
-                        <div (click)="toggleFavorite(contact.id)">
-                            <i class="far fa-heart"></i>
-                        </div>
-                    </ng-template>
-                    <div (click)="deleteContact(contact.id)">
-                        <i class="far fa-thrash"></i>
-                    </div>
 
-                </div>
+                        <ng-template #loading>
+                            <div class="loader">
+                                <mat-spinner mode='indeterminate' diameter='24' strokeWidth='2'></mat-spinner>
+                            </div>
+                        </ng-template>
 
-                <ng-template #loading>
-                    <div class="loader">
-                        <mat-spinner mode='indeterminate' diameter='24' strokeWidth='2'></mat-spinner>
-                    </div>
-                </ng-template>
-
-
-            </div>
-            <hr class="space_occupier" />
-        </ng-container>
+                    </button>
+                </ng-container>
+            </ng-container>
+        </div>
     </ng-scrollbar>
-    <span class="blurred"></span>
 </div>

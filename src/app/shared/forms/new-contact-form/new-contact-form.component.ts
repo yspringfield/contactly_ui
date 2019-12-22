@@ -35,7 +35,6 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
     this.newContactForm = _formBuilder.group(this.defaultFormValue)
     this.sink.push(this._contactsService.contacts_to_edit$.subscribe(
       contact => {
-        console.log('here')
         if (Object.keys(contact).length < 1) return
         this.newContactForm.reset(contact);
         this.updating = true

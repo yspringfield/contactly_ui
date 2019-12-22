@@ -1,28 +1,13 @@
 :host {
-  width: calc(100% - 24px);
-  // width:calc(100% - 25px);
-  display: flex;
+  display: contents;
 }
 
 .container {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-flow: row;
-  // grid-auto-rows: min-content;
-  //   background: orange;
   grid-row-gap: 12px;
-  grid-column-gap: 16px;
   justify-items: stretch;
-  flex-grow: 1;
-  grid-template-rows: 105px 3px;
-}
-
-.divider {
-  height: 2px;
-  border-radius: 2px;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  border: unset;
 }
 
 .title {
@@ -40,7 +25,6 @@
   grid-gap: 16px;
   grid-template-rows: min-content auto;
   height: 130px;
-  //   padding: 8px;
 }
 
 .form_input {
@@ -50,7 +34,7 @@
 }
 .dropzone {
   display: grid;
-  border-radius: 8px;
+  border-radius: 4px;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
@@ -59,10 +43,6 @@
   position: relative;
   grid-gap: 8px;
   box-sizing: border-box;
-}
-
-.one_column {
-  //   grid-column: unset;
 }
 
 .full_container {
@@ -82,7 +62,7 @@
   height: 90%;
   width: 120px;
   border-radius: 4px;
-  object-fit: contain;
+  object-fit: cover;
   margin-left: 0px;
 }
 

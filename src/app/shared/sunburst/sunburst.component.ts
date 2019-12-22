@@ -26,7 +26,6 @@ export class SunburstComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.previousValue && changes.data.previousValue.name === 'nothing') {
-      console.log('inside')
       const dimens = this.dimens_pipe.transform(this.container.nativeElement)
       this.renderGraph(dimens, this.id, changes.data.currentValue, this.container.nativeElement)
     }
