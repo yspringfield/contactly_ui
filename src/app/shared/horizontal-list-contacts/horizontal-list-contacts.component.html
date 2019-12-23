@@ -3,7 +3,7 @@
         <div class="content">
             <ng-container *ngIf="contacts$ | async as contacts">
                 <ng-container *ngFor="let contact of contacts">
-                    <button class="item" routerLink="./{{contact.id}}">
+                    <button class="item align-left" routerLink="./{{contact.id}}">
                         <img [src]="contact.profile_photo" class="profile_photo">
                         <span></span>
                         <span></span>

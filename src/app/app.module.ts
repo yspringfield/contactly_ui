@@ -12,12 +12,15 @@ import { MaterialModule } from './material.module';
 import { StoreService } from './services/store/store.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { AuthModule } from './auth/auth.module';
+import { LayoutModule } from '@angular/cdk/layout';
+
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
     BrowserModule,
+    LayoutModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,// important this be imported before the entrypagemodule due to the way routing is configured.

@@ -1,16 +1,12 @@
-// .container{
-    //     height:20px;
-    //     display:flex;
-    //     align-items: center;
-    //     padding:16px;
-    //     justify-content: flex-start;
-    //     background:teal;
-    // }
-    
-    .profile_name{
-        margin-top: 24px;
-        position:sticky;
-        top:0px;
-        opacity: 0.9;
-        margin-bottom: 20px;
-    }
+.icon {
+    position: relative;
+    top:-8px;
+}
+
+.profile_name {
+  margin-top: 24px;
+  position: sticky;
+  top: 0px;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}

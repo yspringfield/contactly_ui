@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, timer, } from 'rxjs';
+import { BehaviorSubject, timer, Observable, } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { nodesAndLinks } from './nodes'
@@ -48,7 +48,6 @@ export class StoreService {
     ).map((i, idx) => ({ ...i, id: idx + 1 })),
 
   ]
-  _
 
   login_data: LoginData;
 
@@ -56,8 +55,8 @@ export class StoreService {
   //@ts-ignore
   private _contacts_to_edit$ = new BehaviorSubject<Contact>({})
 
-  // //@ts-ignore
-  // private _contacts_to_view$ = new BehaviorSubject<Contact>({})
+  private _mode$ = new BehaviorSubject<string>('side')
+  private toggleSidenave$ = new BehaviorSubject<boolean>(false)
 
   private _sunburst_data$ = new BehaviorSubject<any>({ name: 'nothing', children: [] })
   private _force_graph$ = new BehaviorSubject<any>(nodesAndLinks)
@@ -66,7 +65,6 @@ export class StoreService {
     const oldContacts = this._contacts$.value
     this._contacts$.next(oldContacts.map(c => c.id !== id ? c : { ...c, loading: true }))
     return timer(2000)
-
   }
 
   deleteContact = (id: string) => {
@@ -79,7 +77,6 @@ export class StoreService {
       })
     )
   }
-
 
   updateContact = (newContact: Contact) => {
     newContact.loading = false
@@ -127,10 +124,6 @@ export class StoreService {
     this._contacts_to_edit$.next(contact)
   }
 
-  // viewDetails = (contact: Contact) => {
-  //   this._contacts_to_view$.next(contact)
-  // }
-
   login = (login_data: LoginData) => timer(2000).pipe(
     tap({
       complete: () => this.login_data = login_data
@@ -157,6 +150,14 @@ export class StoreService {
 
   set dimens(data) { this._dimens = data }
   get dimens() { return this._dimens }
+
+  set mode(m: string) { this._mode$.next(m) }
+
+  //@ts-ignore
+  get mode() { return this._mode$.asObservable() }
+
+  sidenav_toggle_action = (isOpened) => this.toggleSidenave$.next(isOpened)
+  get toggleSidenav() { return this.toggleSidenave$.asObservable() }
 
 
 }

@@ -17,7 +17,7 @@ import { StoreService } from '../services/store/store.service';
     SharedModule,
   ],
   providers: [
-    StoreService,
+    // StoreService,
   ]
 })
 export class DashboardModule { }
