@@ -139,12 +139,6 @@ export class StoreService {
     this._contacts_to_edit$.next(contact)
   }
 
-  login = (login_data: LoginData) => timer(2000).pipe(
-    tap({
-      complete: () => this.login_data = login_data
-    })
-  )
-
   find_by_id = id => {
     let contact = this._contacts$.value.find(c => c.id == id)
     return contact

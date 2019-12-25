@@ -5,12 +5,15 @@
     </small>
     <div class="form_field">
         <small>Username/Email*</small>
-        <input formControlName="name" class="form_input field" type='text'>
+        <input formControlName="email" class="form_input field" type='text'>
     </div>
     <div class="form_field">
         <small>Password*</small>
-        <input formControlName="name" class="form_input field" type='password'>
+        <input formControlName="password" class="form_input field" type='password'>
     </div>
+    <span>
+        {{loginForm| json}}
+    </span>
 
     <button [disabled]="loginForm.invalid" type="submit" mat-raised-button class="button">
         <span style="display: flex; align-items: center; justify-content: space-evenly;">

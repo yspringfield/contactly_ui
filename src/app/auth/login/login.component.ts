@@ -6,6 +6,8 @@ import { take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _loginService: StoreService,
     private _snackBar: MatSnackBar,
+    private _auth_service:AuthService,
     private _router: Router
   ) {
   }
@@ -28,10 +31,11 @@ export class LoginComponent implements OnInit {
   onSubmit = () => {
     this.loading = true;
     const { value } = this.loginForm
-    this._loginService.login(value).pipe(take(1))
+    this._auth_service.authenticate(value).pipe(take(1))
       .subscribe(
         {
           error: e => {
+            console.log({e})
             this.loading = false
             this._snackBar.openFromComponent(SnackbarComponent, {
               duration: this.duration,
