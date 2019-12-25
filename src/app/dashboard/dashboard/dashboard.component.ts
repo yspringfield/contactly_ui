@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from 'src/app/services/store/store.service';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -80,8 +81,8 @@ export class DashboardComponent implements OnInit {
   sunburst_data$: any;
   force_graph$: any;
 
-  constructor(private readonly _store_service:StoreService) { 
-    this.sunburst_data$=_store_service.sunbust_data$ 
+  constructor(private readonly _store_service: StoreService, private readonly _dashboard_service: DashboardService) {
+    this.sunburst_data$ = _store_service.sunbust_data$
     this.force_graph$ = _store_service.force_graph$
   }
 

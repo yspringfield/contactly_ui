@@ -6,6 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: EntryPageComponent,
+    // pathMatch: 'exact',
     children: [
       {
         path: 'contacts',
@@ -15,8 +16,13 @@ const routes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./../dashboard/dashboard.module').then(m => m.DashboardModule),
       },
-    ]
-  }
+      {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: '/auth/login'
+      }
+    ],
+  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 <div class="container">
     <ng-scrollbar>
         <div class="content">
-            <ng-container *ngIf="(this.contacts$ | async) as contacts">
+            <!-- <ng-container *ngIf="(this.contacts$ | async) as contacts"> -->
                 <div class="item" *ngFor="let contact of contacts">
                     <div class="flip-box">
                         <div class="flip-box-inner">
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-            </ng-container>
+            <!-- </ng-container> -->
         </div>
     </ng-scrollbar>
 

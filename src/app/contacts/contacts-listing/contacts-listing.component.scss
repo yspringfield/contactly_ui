@@ -85,6 +85,10 @@
     // top:8px;
     // left:8px;
   }
+  @media (max-width: 700px) {
+    width:200px;
+  }
+
 }
 
 .two_row {
@@ -121,4 +125,9 @@
   border-top-right-radius: 4px;
   background-image: linear-gradient(to top right, #e3ecf5, #e3ecf5), linear-gradient(to top right, #7b61da7c, #f7b1bd7c);
   width: 300px;
+}
+
+.color_icon {
+  color: black !important;
+  opacity: unset !important;
 }

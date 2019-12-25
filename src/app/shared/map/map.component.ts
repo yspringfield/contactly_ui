@@ -22,8 +22,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     {
       "name": "Goroka",
       "city": "Goroka, Papua New Guinea",
-      "iata_faa": "GKA",
-      "icao": "AYGA",
+      "ip": "192.168.00.34",
+      "browser": "Chrome",
       "lat": -6.081689,
       "lng": 145.391881,
       "alt": 5282,
@@ -31,8 +31,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     }, {
       "name": "Madang",
       "city": "Madang, Papua New Guinea",
-      "iata_faa": "MAG",
-      "icao": "AYMD",
+      "ip": "192.168.00.34",
+      "browser": "Curl",
       "lat": -5.207083,
       "lng": 145.7887,
       "alt": 20,
@@ -41,7 +41,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     }, {
       "name": "San Diego Old Town Transit Center",
       "city": "San Diego, United States",
-      "iata_faa": "OLT",
+      "ip": "192.168.00.34",
       "lat": 32.7552,
       "lng": -117.1995,
       "alt": 0,
@@ -69,9 +69,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       let marker = L.marker([51.5, -0.09])
         .bindPopup(markerDatum.name +
           '<br/>' + markerDatum.city +
-          '<br/><b>IATA/FAA:</b> ' + markerDatum.iata_faa +
-          '<br/><b>ICAO:</b> ' + markerDatum.icao +
-          '<br/><b>Altitude:</b> ' + Math.round(markerDatum.alt * 0.3048) + ' m' +
+          '<br/><b>ip:</b> ' + markerDatum.ip +
+          '<br/><b>Browser:</b> ' + markerDatum.browser +
+          '<br/><b>Version:</b> ' + Math.round(markerDatum.alt * 0.3048) +
           '<br/><b>Timezone:</b> ' + markerDatum.tz);
       markers.addLayer(marker);
     })

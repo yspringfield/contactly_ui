@@ -7,7 +7,7 @@ import { DimensPipe } from '../pipes/dimens.pipe';
   templateUrl: './sunburst.component.html',
   styleUrls: ['./sunburst.component.scss']
 })
-export class SunburstComponent implements OnInit, OnChanges {
+export class SunburstComponent implements OnInit {
 
 
   @Input('id')
@@ -31,7 +31,13 @@ export class SunburstComponent implements OnInit, OnChanges {
     }
   }
 
+  // ngAfterViewInit() {
+  //   const dimens = this.dimens_pipe.transform(this.container.nativeElement)
+  //   this.renderGraph(dimens, this.id, this.data, this.container.nativeElement)
+  // }
+
   renderGraph = ([width, height]: number[], id: string, data, ref) => {
+    console.log({width, height, id, data, ref})
 
 
     const partition = data => {
@@ -61,11 +67,13 @@ export class SunburstComponent implements OnInit, OnChanges {
     const root = partition(data);
 
     root.each(d => d.current = d);
-
+    
+    console.log({svg:d3.select(ref)})
     const svg = d3.select(ref).append("svg")
       .attr("width", width)
       .attr("height", height)
       .style("font", "10px sans-serif");
+
 
     const g = svg.append("g")
       .attr("transform", `translate(${width / 2},${height / 2})`);

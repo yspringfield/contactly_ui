@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { StoreService, Contact } from 'src/app/services/store/store.service';
 import { Observable, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,15 +9,14 @@ import { SnackbarComponent } from '../snackbar/snackbar.component';
   templateUrl: './horizontal-list-contacts.component.html',
   styleUrls: ['./horizontal-list-contacts.component.scss']
 })
-export class HorizontalListContactsComponent implements OnInit {
-  contacts$: Observable<Contact[]>;
+export class HorizontalListContactsComponent {
+  @Input('contacts')
+  contacts:Contact[]
 
   constructor(
     private contactsService: StoreService,
     private _snackBar: MatSnackBar,
-  ) {
-    this.contacts$ = contactsService.contacts$
-  }
+  ) { }
 
   duration = 2000
   onSubscribe = {
@@ -48,13 +47,4 @@ export class HorizontalListContactsComponent implements OnInit {
   markForEdit = (contact: Contact) => {
     this.contactsService.markForEdit(contact)
   }
-
-
-  // viewDetails = (contact: Contact) => {
-  //   this.contactsService.viewDetails(contact)
-  // }
-
-  ngOnInit() {
-  }
-
 }

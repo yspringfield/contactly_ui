@@ -8,23 +8,36 @@
             <div class="two_row">
                 <div class="space_between">
                     <div class="form_wrapper">
-                        <button class="iconmat-subheading-" mat-icon-button (click)="hide = !hide">
+                        <button class="iconmat-subheading-" mat-icon-button>
                             <mat-icon>search</mat-icon>
                         </button>
-                        <input class="input" placeholder="Looking for someone..." type='search'>
+                        <input class="input" [(ngModel)]="query" placeholder="Looking for someone..." type='search'>
                     </div>
-                    <mat-button-toggle-group appearance="legacy" value='list' name="fontStyle" aria-label="Font Style"
-                        #list_toggle="matButtonToggleGroup">
-                        <mat-button-toggle value="list">List</mat-button-toggle>
-                        <mat-button-toggle value="cards">Cards</mat-button-toggle>
+                    <mat-button-toggle-group [(ngModel)]="list_toggle" appearance="legacy" name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle value="list"><mat-icon>list</mat-icon></mat-button-toggle>
+                        <mat-button-toggle value="cards"><mat-icon>view_module</mat-icon></mat-button-toggle>
                     </mat-button-toggle-group>
                 </div>
                 <div class="search_controls">
-                    <mat-checkbox>Favorite</mat-checkbox>
+                    <div>
+                        <mat-button-toggle-group  [(ngModel)]='filter' appearance="legacy" name="fontStyle" aria-label="Font Style">
+                            <mat-button-toggle class="color_icon" value="false">
+                                <mat-icon>favorite_outline</mat-icon>
+                            </mat-button-toggle>
+                            <mat-button-toggle class="color_icon" value="true">
+                                <mat-icon>favorite</mat-icon>
+                            </mat-button-toggle>
+                            <mat-button-toggle class="color_icon" value='all'>All</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
                 </div>
             </div>
-            <app-horizontal-list-contacts *ngIf="list_toggle.value !== 'cards'"></app-horizontal-list-contacts>
-            <app-cards-list-contacts *ngIf="list_toggle.value === 'cards'"></app-cards-list-contacts>
+            <ng-container *ngIf="(contacts$ | async | status_filter:filter | search_filter:query ) as contacts">
+                <app-horizontal-list-contacts [contacts]="contacts" *ngIf="list_toggle !== 'cards'">
+                </app-horizontal-list-contacts>
+                <app-cards-list-contacts [contacts]="contacts" *ngIf="list_toggle === 'cards'">
+                </app-cards-list-contacts>
+            </ng-container>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

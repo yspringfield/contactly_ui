@@ -30,6 +30,12 @@ export class SideNavComponent implements OnInit {
       name: 'List contacts',
       pathMatch: 'exact',
     },
+    {
+      icon: 'lock',
+      link: '/auth/login',
+      name: 'Logout',
+      pathMatch: 'exact',
+    },
   ]
 
   constructor(sideNavService: SideNavServiceService) {

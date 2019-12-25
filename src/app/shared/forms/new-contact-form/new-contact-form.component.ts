@@ -4,6 +4,8 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { StoreService } from 'src/app/services/store/store.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../snackbar/snackbar.component';
+import { Router, ActivatedRoute, ActivationStart } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) { }
@@ -31,16 +33,25 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
     is_favorite: false,
   }
 
-  constructor(private _contactsService: StoreService, private _snackBarService: MatSnackBar, _formBuilder: FormBuilder) {
+  constructor(
+    private _contactsService: StoreService,
+    private _snackBarService: MatSnackBar,
+    _formBuilder: FormBuilder,
+    private readonly _router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+  ) {
     this.newContactForm = _formBuilder.group(this.defaultFormValue)
-    this.sink.push(this._contactsService.contacts_to_edit$.subscribe(
-      contact => {
-        if (Object.keys(contact).length < 1) return
-        this.newContactForm.reset(contact);
-        this.updating = true
-        this.toBeEditedContact = contact
+    this.activatedRoute.paramMap
+      .pipe(take(1))
+      .subscribe(params => {
+        let id = params.get('id')
+        if (id) {
+          this.updating = true
+          let contact = this._contactsService.find_by_id(id)
+          this.newContactForm.reset(contact);
+          this.toBeEditedContact = contact
+        }
       })
-    )
   }
 
   duration = 2000
@@ -73,6 +84,9 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
         },
         complete: () => {
           this.loading = false
+          if (this.updating) {
+            this._router.navigateByUrl('/contacts/list')
+          }
           this._snackBarService.openFromComponent(SnackbarComponent, {
             duration: this.duration,
             data: { type: 'success', text: 'Success' }
@@ -105,6 +119,10 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this._router.events.subscribe(e => {
+    //   if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+    //     this.outlet.deactivate();
+    // });
   }
 
   ngOnDestroy() {

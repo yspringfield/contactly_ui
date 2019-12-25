@@ -4,6 +4,7 @@
   //   position: relative;
   //   background-image: url({"./../../../assets/auth_background.jpg");
 }
+
 .img {
   height: 100%;
   position: absolute;
@@ -35,7 +36,9 @@
   position: relative;
   color: white;
   justify-content: center;
-  // padding-top: 40px;
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 .content {
@@ -44,6 +47,20 @@
   flex-shrink: 0.5;
   height: 100%;
   background-color: #e3ecf5;
+  @media (max-width: 700px) {
+    margin: 0px 10%;
+    background-color: #e3ecf5d0;
+  }
+}
+
+.xs_only {
+  display: none !important;
+  justify-items: center !important;
+  margin-top: 8px;
+  text-align: center;
+  @media (max-width: 700px) {
+    display: grid !important;
+  }
 }
 
 .main_content {
@@ -68,6 +85,6 @@
   box-sizing: border-box;
 }
 
-.title{
-  margin:unset;
+.title {
+  margin: unset;
 }

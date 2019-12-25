@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, timer, Observable, } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { take, tap, filter, map, delay } from 'rxjs/operators';
 import { nodesAndLinks } from './nodes'
+import { FootPrint } from '../interfaces';
 
 export interface Contact {
   name: string;
@@ -49,21 +49,32 @@ export class StoreService {
 
   ]
 
+  _authInfo = {
+    token: localStorage['token'] || undefined,
+    username: localStorage['username'] || '',
+    role: localStorage['role'] || 'user',
+    avatar: localStorage['avatar'] || 'https://picsum.photos/200',
+  }
+
   login_data: LoginData;
 
   private _contacts$ = new BehaviorSubject<Contact[]>(this._contacts)
+  _contacts_sorted$ = this._contacts$.asObservable()
+
   //@ts-ignore
   private _contacts_to_edit$ = new BehaviorSubject<Contact>({})
 
   private _mode$ = new BehaviorSubject<string>('side')
   private toggleSidenave$ = new BehaviorSubject<boolean>(false)
 
-  private _sunburst_data$ = new BehaviorSubject<any>({ name: 'nothing', children: [] })
-  private _force_graph$ = new BehaviorSubject<any>(nodesAndLinks)
+  private b_sunburst_data = new BehaviorSubject<any>({ name: 'nothing', children: [] })
+  private b_force_graph = new BehaviorSubject<any>(nodesAndLinks)
+  private b_footprint_data = new BehaviorSubject<FootPrint[]>([])
 
   setLoading$ = (id: string) => {
     const oldContacts = this._contacts$.value
     this._contacts$.next(oldContacts.map(c => c.id !== id ? c : { ...c, loading: true }))
+    this._contacts = this._contacts$.value
     return timer(2000)
   }
 
@@ -73,6 +84,7 @@ export class StoreService {
         complete: () => {
           const oldContacts = this._contacts$.value
           this._contacts$.next(oldContacts.filter(c => c.id !== id))
+          this._contacts = this._contacts$.value
         }
       })
     )
@@ -87,6 +99,7 @@ export class StoreService {
           complete: () => {
             const oldContacts = this._contacts$.value
             this._contacts$.next(oldContacts.map(c => c.id === newContact.id ? newContact : { ...c, loading: false }))
+            this._contacts = this._contacts$.value
           }
         })
       )
@@ -96,12 +109,13 @@ export class StoreService {
     return this.setLoading$(id).pipe(
       tap({
         complete: () => {
-          const oldContacts = this._contacts$.value
-          this._contacts$.next(oldContacts.map(c => {
+          // const oldContacts = this._contacts$.value
+          this._contacts$.next(this._contacts.map(c => {
             c.loading = false
             if (c.id !== id) return c
             return { ...c, is_favorite: !c.is_favorite }
           }))
+          this._contacts = this._contacts$.value
         }
       })
     )
@@ -115,6 +129,7 @@ export class StoreService {
           complete: () => {
             const oldContacts = this._contacts$.value
             this._contacts$.next([{ loading: false, ...newContact }, ...oldContacts])
+            this._contacts = this._contacts$.value
           }
         })
       )
@@ -130,26 +145,28 @@ export class StoreService {
     })
   )
 
-  constructor(private readonly _http_client: HttpClient) {
-    _http_client.get("https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json")
-      .pipe(take(1))
-      .subscribe(data => {
-        this._sunburst_data$.next(data)
-      })
-  }
-
   find_by_id = id => {
     let contact = this._contacts$.value.find(c => c.id == id)
     return contact
   }
 
-  get contacts$() { return this._contacts$.asObservable() }
+  sortIsFavorite = (is_favorite?: boolean) => {
+    if (is_favorite === undefined) return this._contacts$.next(this._contacts)
+    // this._contacts = this._contacts$.value
+    this._contacts$.next(
+      this._contacts.filter(contact => contact.is_favorite === is_favorite)
+    )
+  }
+
+  get contacts$() { return this._contacts_sorted$ }
   get contacts_to_edit$() { return this._contacts_to_edit$.asObservable() }
-  get sunbust_data$() { return this._sunburst_data$.asObservable() }
-  get force_graph$() { return this._force_graph$.asObservable() }
+  get sunbust_data$() { return this.b_sunburst_data.asObservable() }
+  get force_graph$() { return this.b_force_graph.asObservable() }
 
   set dimens(data) { this._dimens = data }
   get dimens() { return this._dimens }
+  set sunbust_data(data) { this.b_sunburst_data.next(data) }
+  set footprints(data: FootPrint[]) { this.b_footprint_data.next(data) }
 
   set mode(m: string) { this._mode$.next(m) }
 
@@ -159,5 +176,63 @@ export class StoreService {
   sidenav_toggle_action = (isOpened) => this.toggleSidenave$.next(isOpened)
   get toggleSidenav() { return this.toggleSidenave$.asObservable() }
 
+  set auth_info(info) {
+    this._authInfo = info
+    localStorage['token'] = info.token
+    localStorage['username'] = info.username
+    localStorage['avatar'] = info.avatar
+    localStorage['role'] = info.role
+  }
 
+  get auth_info() { return this._authInfo }
+
+  get browser_categories() {
+    return this.b_footprint_data.asObservable().pipe(
+      map(
+        footprints => footprints
+          .reduce((acc, curr) => {
+            acc[curr.browser] = (acc[curr.browser] || 0) + 1
+            return acc
+          }, {})
+      )
+    )
+  }
+
+  get repartition_by_platform_os_browser() {
+    return this.b_footprint_data.asObservable().pipe(
+      map(
+        footprints => footprints.map(({ form_factor, os, browser }) => ({ form_factor, os, browser }))
+      ),
+      map(
+        footprints => footprints
+          .reduce((acc, curr) => {
+            const form_factor = curr.form_factor
+            delete curr.form_factor
+            acc[form_factor] = [...(acc[form_factor] || []), curr]
+            return acc
+          }, {})
+      ),
+      map(
+        by_platform => {
+          return Object.keys(by_platform).reduce((acc, curr) => {
+            const platform: any[] = by_platform[curr]
+            const data = { name: curr, children: platform }
+            acc.children.push(data)
+            return acc
+          }, { name: 'Web', children: [] })
+        }
+      ),
+      map(for_os => {
+        const { children } = for_os
+        children.map(partial_platform => {
+          const parsed_os_browser = partial_platform.children.reduce((acc, curr) => {
+            acc[curr.os] = [...(acc[curr.os] || []), {}]
+          }, {})
+
+          return { name: for_os.name, children: [] }
+        })
+
+      })
+    )
+  }
 }

@@ -7,15 +7,18 @@ import { Contact, StoreService } from 'src/app/services/store/store.service';
   templateUrl: './cards-list-contacts.component.html',
   styleUrls: ['./cards-list-contacts.component.scss']
 })
-export class CardsListContactsComponent implements OnInit {
-  contacts$: Observable<Contact[]>;
+export class CardsListContactsComponent {
+  // contacts$: Observable<Contact[]>;
 
-  constructor(private contactsService: StoreService) {
-    this.contacts$ = contactsService.contacts$
-  }
+  @Input('contacts')
+  contacts:Contact[]
+
+  // constructor(private contactsService: StoreService) {
+  //   this.contacts$ = contactsService.contacts$
+  // }
 
 
-  ngOnInit() {
-  }
+  // ngOnInit() {
+  // }
 
 }

@@ -5,6 +5,7 @@ import { StoreService } from 'src/app/services/store/store.service';
 import { take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,12 @@ export class LoginComponent implements OnInit {
   loading = false;
   duration = 2000;
 
-  constructor(private _formBuilder: FormBuilder, private _loginService: StoreService, private _snackBar: MatSnackBar) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _loginService: StoreService,
+    private _snackBar: MatSnackBar,
+    private _router: Router
+  ) {
   }
 
   onSubmit = () => {
@@ -38,6 +44,7 @@ export class LoginComponent implements OnInit {
               duration: this.duration,
               data: { type: 'success', text: 'Success' }
             });
+            this._router.navigateByUrl('/contacts/list')
             this.loading = false
           }
         })
@@ -54,7 +61,7 @@ export class LoginComponent implements OnInit {
           Validators.minLength(4),
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
         ]),
-        
+
       password: this._formBuilder.control(
         '',
         [

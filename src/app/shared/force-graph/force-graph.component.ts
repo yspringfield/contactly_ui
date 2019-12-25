@@ -44,7 +44,7 @@ export class ForceGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   renderGraph(nodesAndLinks, dimens: number[], ref) {
 
-    let width = dimens[0] - 201;
+    let width = dimens[0];
     let height = dimens[1];
     let color = d3.scaleOrdinal(d3.schemeCategory10);
 

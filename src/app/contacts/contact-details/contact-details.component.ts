@@ -15,7 +15,6 @@ export class ContactDetailsComponent implements OnDestroy {
   contact$: Observable<Contact>;
 
   constructor(
-    private readonly _router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly _storeService: StoreService,
     private readonly sidenav: MatSidenav,

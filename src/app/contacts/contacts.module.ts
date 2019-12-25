@@ -8,6 +8,8 @@ import { ContactsRoutingModule } from './contacts-routing.module'
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material.module';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { StatusFilterPipe } from './pipes/status-filter.pipe';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
     ContactsListingComponent,
     ItemContactComponent,
     FormNewContactComponent,
-    ContactDetailsComponent
+    ContactDetailsComponent,
+    SearchFilterPipe,
+    StatusFilterPipe
   ],
   imports: [
     ContactsRoutingModule,
