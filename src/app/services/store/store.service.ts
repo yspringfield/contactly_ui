@@ -26,7 +26,7 @@ export interface LoginData {
 export class StoreService {
 
   _dimens = [0, 0]
-  _contacts: Contact[] = [
+  private _contacts: Contact[] = [
     {
       name: "Andrew carnegie",
       registrationTime: new Date(),
@@ -46,7 +46,6 @@ export class StoreService {
         description: 'In this post, we will learn how the default Angular styling mechanism (Emulated Encapsulation) works under the hood, and we will also cover the Sass support of the Angular CLI, and some best practices for how to leverage the many Sass features available.',
       }
     ).map((i, idx) => ({ ...i, id: idx + 1 })),
-
   ]
 
   _authInfo = {
@@ -152,7 +151,11 @@ export class StoreService {
     )
   }
 
-  get contacts$() { return this._contacts_sorted$ }
+  get contacts$() { return this._contacts$.asObservable() }
+  set contacts(contacts:Contact[]) {
+    // console.log('setting');
+    this._contacts$.next(contacts)
+  }
   get contacts_to_edit$() { return this._contacts_to_edit$.asObservable() }
   get sunbust_data$() { return this.b_sunburst_data.asObservable() }
   get force_graph$() { return this.b_force_graph.asObservable() }

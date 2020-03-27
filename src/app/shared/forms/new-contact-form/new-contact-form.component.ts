@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../snackbar/snackbar.component';
 import { Router, ActivatedRoute, ActivationStart } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { ContactsService } from 'src/app/contacts/contacts.service';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) { }
@@ -19,7 +20,7 @@ class ImageSnippet {
 })
 export class NewContactFormComponent implements OnInit, OnDestroy {
   loading = false;
-  newContactForm: FormGroup;
+  contactForm: FormGroup;
   sink: Subscription[] = [];
   updating = false;
   toBeEditedContact;
@@ -34,21 +35,21 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private _contactsService: StoreService,
+    private _contacts_service: ContactsService,
     private _snackBarService: MatSnackBar,
     _formBuilder: FormBuilder,
     private readonly _router: Router,
     private readonly activatedRoute: ActivatedRoute,
   ) {
-    this.newContactForm = _formBuilder.group(this.defaultFormValue)
+    this.contactForm = _formBuilder.group(this.defaultFormValue)
     this.activatedRoute.paramMap
       .pipe(take(1))
       .subscribe(params => {
         let id = params.get('id')
         if (id) {
           this.updating = true
-          let contact = this._contactsService.find_by_id(id)
-          this.newContactForm.reset(contact);
+          let contact = this._contacts_service.find_by_id(id)
+          this.contactForm.reset(contact);
           this.toBeEditedContact = contact
         }
       })
@@ -59,15 +60,16 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
   onSubmit = () => {
     this.loading = true;
     let action;
+    console.log(this.contactForm.value)
     if (this.updating) {
-      action = this._contactsService.updateContact({
+      action = this._contacts_service.update_contact({
         ...this.toBeEditedContact,
-        ...this.newContactForm.value,
+        ...this.contactForm.value,
         loading: false,
       })
     } else {
-      action = this._contactsService.addContact({
-        ...this.newContactForm.value,
+      action = this._contacts_service.save_new_contact({
+        ...this.contactForm.value,
         time: new Date(),
         id: `${Math.random() * 1000}`.substring(0, 4),
         loading: false,
@@ -91,7 +93,7 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
             duration: this.duration,
             data: { type: 'success', text: 'Success' }
           });
-          this.newContactForm.reset(this.defaultFormValue)
+          this.contactForm.reset(this.defaultFormValue)
           this.updating = false
         }
       })
@@ -105,7 +107,7 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
     reader.addEventListener("load", () => {
       //@ts-ignore
       // this.selectedFile = new ImageSnippet(event.target.result, reader.result);
-      this.newContactForm.patchValue({ profile_photo: reader.result })
+      this.contactForm.patchValue({ profile_photo: reader.result })
     });
 
     if (file) {
@@ -115,7 +117,7 @@ export class NewContactFormComponent implements OnInit, OnDestroy {
 
   resetForm = e => {
     this.updating = false
-    this.newContactForm.reset(this.defaultFormValue)
+    this.contactForm.reset(this.defaultFormValue)
   }
 
   ngOnInit() {

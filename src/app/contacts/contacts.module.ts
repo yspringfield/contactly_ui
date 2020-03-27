@@ -10,6 +10,7 @@ import { MaterialModule } from '../material.module';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { StatusFilterPipe } from './pipes/status-filter.pipe';
+import { ContactsService } from './contacts.service';
 
 
 @NgModule({
@@ -27,6 +28,9 @@ import { StatusFilterPipe } from './pipes/status-filter.pipe';
     CommonModule,
     SharedModule,
     MaterialModule
+  ],
+  providers:[
+    ContactsService,
   ]
 })
 export class ContactsModule { }

@@ -14,3 +14,8 @@ export interface FootPrint {
     country: string;
     timezone: string;
 }
+
+export interface HttpRequestResponse<T>{
+    data:T,
+    message:string
+}

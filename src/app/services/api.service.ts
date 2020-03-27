@@ -13,7 +13,7 @@ export class ApiService {
   ) {
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage['token']|| ''}`
+      'Authorization': `Bearer ${localStorage['token'] || ''}`
     })
   }
 
@@ -31,21 +31,21 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
-  put(path: string, body: Object = {}): Observable<any> {
-    return this._http.put(
+  put<T>(path: string, body: Object = {}): Observable<T> {
+    return this._http.put<T>(
       `${environment.api_url}${path}`, JSON.stringify(body), { headers: this.headers }
     ).pipe(catchError(this.formatErrors));
   }
 
-  post(path: string, body: Object = {}): Observable<any> {
-    return this._http.post(
+  post<T>(path: string, body: Object = {}): Observable<T> {
+    return this._http.post<T>(
       `${environment.api_url}${path}`, JSON.stringify(body), { headers: this.headers }
     ).pipe(catchError(this.formatErrors));
   }
 
-  delete(path): Observable<any> {
-    return this._http.delete(
-      `${environment.api_url}${path}`, {headers:this.headers}
+  delete<T>(path): Observable<T> {
+    return this._http.delete<T>(
+      `${environment.api_url}${path}`, { headers: this.headers }
     ).pipe(catchError(this.formatErrors));
   }
 }

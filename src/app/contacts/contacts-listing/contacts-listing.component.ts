@@ -4,6 +4,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { StoreService, Contact } from 'src/app/services/store/store.service';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { ContactsService } from '../contacts.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contacts-listing',
@@ -22,9 +24,9 @@ export class ContactsListingComponent implements AfterViewInit, OnDestroy {
   bs_contacts = new BehaviorSubject<Contact[]>([]);
   contacts$ = this.bs_contacts.asObservable();
   b_sorted_contact = new BehaviorSubject<Contact[]>([])
-  
+
   sorted_contact$ = this.b_sorted_contact.asObservable();
-  
+
   query = ''
   filter = 'all'
   list_toggle = 'list'
@@ -32,8 +34,17 @@ export class ContactsListingComponent implements AfterViewInit, OnDestroy {
   indeterminate = true
   checked = false
 
-  constructor(private readonly _router: Router, private readonly _store_service: StoreService) {
-    const sub = _store_service.contacts$.subscribe(c => this.bs_contacts.next(c))
+  constructor(
+    private readonly _router: Router,
+    private readonly _store_service: StoreService,
+    private readonly _contacts_service: ContactsService,
+  ) {
+    const sub = _store_service.contacts$
+    // .pipe(take(1))
+    .subscribe(c => {
+      this.bs_contacts.next(c)
+      return console.log({ data: c })
+    })
     this.sync.push(sub)
   }
 
@@ -47,8 +58,8 @@ export class ContactsListingComponent implements AfterViewInit, OnDestroy {
 
   toggle_favorite_search = () => {
     console.log({
-      checked:this.checked,
-      indeterminate:this.indeterminate,
+      checked: this.checked,
+      indeterminate: this.indeterminate,
     })
     if (this.checked) {
       this.checked = false
