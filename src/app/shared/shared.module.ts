@@ -7,7 +7,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HorizontalListContactsComponent } from './horizontal-list-contacts/horizontal-list-contacts.component';
 import { CardsListContactsComponent } from './cards-list-contacts/cards-list-contacts.component';
-import { NgScrollbarModule } from 'ngx-scrollbar';
+// import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NewContactFormComponent } from './forms/new-contact-form/new-contact-form.component';
 import { MaterialModule } from '../material.module';
 import { EllipsizePipe } from './pipes/ellipsize.pipe';
@@ -43,7 +43,7 @@ import { ForceGraphComponent } from './force-graph/force-graph.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    NgScrollbarModule,
+    // NgScrollbarModule,
     MaterialModule,
   ],
   providers: [
@@ -66,7 +66,7 @@ import { ForceGraphComponent } from './force-graph/force-graph.component';
     CardsListContactsComponent,
     HorizontalListContactsComponent,
     NewContactFormComponent,
-    NgScrollbarModule,
+    // NgScrollbarModule,
   ],
   entryComponents: [
     SnackbarComponent,
